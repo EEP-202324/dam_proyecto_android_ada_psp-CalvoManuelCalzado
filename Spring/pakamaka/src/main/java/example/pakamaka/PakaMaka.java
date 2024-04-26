@@ -1,9 +1,5 @@
 package example.pakamaka;
 
-public class PakaMaka {
 
-	public PakaMaka(long l, double d) {
-		// TODO Auto-generated constructor stub
-	}
-
+record CashCard(Long id, String nombre, String apellido, String email, Double numero) {
 }
