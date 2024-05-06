@@ -34,8 +34,8 @@ class InfoCollectorJsonTests {
         assertThat(json.write(infoCollector)).hasJsonPathNumberValue("@.number");
         assertThat(json.write(infoCollector)).extractingJsonPathNumberValue("@.number")
                 .isEqualTo(640882919);
-        assertThat(json.write(infoCollector)).hasJsonPathStringValue("@.Country");
-        assertThat(json.write(infoCollector)).extractingJsonPathStringValue("@.Country")
+        assertThat(json.write(infoCollector)).hasJsonPathStringValue("@.country");
+        assertThat(json.write(infoCollector)).extractingJsonPathStringValue("@.country")
                 .isEqualTo("España");
     }
     
@@ -48,7 +48,7 @@ class InfoCollectorJsonTests {
                "surname": "Garcia",
                "email": "josegarcia@gmail.com",
                "number": 640882919,
-               "Country": "España"
+               "country": "España"
            }
            """;
        assertThat(json.parse(expected))
@@ -58,6 +58,6 @@ class InfoCollectorJsonTests {
        assertThat(json.parseObject(expected).surname()).isEqualTo("Garcia");
        assertThat(json.parseObject(expected).email()).isEqualTo("josegarcia@gmail.com");
        assertThat(json.parseObject(expected).number()).isEqualTo(640882919);
-       assertThat(json.parseObject(expected).Country()).isEqualTo("España");
+       assertThat(json.parseObject(expected).country()).isEqualTo("España");
     }
 }
