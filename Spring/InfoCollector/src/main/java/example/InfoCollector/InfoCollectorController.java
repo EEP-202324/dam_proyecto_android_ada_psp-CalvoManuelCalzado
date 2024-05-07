@@ -30,16 +30,15 @@ class InfoCollectorController {
 			return ResponseEntity.notFound().build();
 		}
 	}
-
+	
 	@PostMapping
-	private ResponseEntity<Void> createInfoCollector(@RequestBody InfoCollector newInfoControllerRequest,
-			UriComponentsBuilder ucb) {
-		InfoCollector savedInfoCollector = infoCollectorRepository.save(newInfoControllerRequest);
-		URI locationOfNewInfoCollector = ucb
-				.path("infocollectors/{id}")
-				.buildAndExpand(savedInfoCollector.id())
-				.toUri();
-		return ResponseEntity.created(locationOfNewInfoCollector).build();
+	private ResponseEntity<Void> createCashCard(@RequestBody InfoCollector newInfoCollectorRequest, UriComponentsBuilder ucb) {
+		InfoCollector savedInfoCollector = infoCollectorRepository.save(newInfoCollectorRequest);
+	   URI locationOfNewInfoCollector = ucb
+	            .path("infocollectors/{id}")
+	            .buildAndExpand(savedInfoCollector.id())
+	            .toUri();
+	   return ResponseEntity.created(locationOfNewInfoCollector).build();
 	}
-
+	
 }

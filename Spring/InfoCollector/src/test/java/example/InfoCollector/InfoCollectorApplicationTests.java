@@ -51,20 +51,20 @@ class InfoCollectorApplicationTests {
 
 		assertThat(response.getStatusCode()).isEqualTo(HttpStatus.NOT_FOUND);
 		assertThat(response.getBody()).isBlank();
-		
+
 	}
-	
+
 	@Test
 	void shouldCreateANewInfoCollector() {
 		InfoCollector newInfoCollector = new InfoCollector(99L, "Jose", "Garcia", "josegarcia@gmail.com", 640882919, "España");
-	   ResponseEntity<Void> createResponse = restTemplate.postForEntity("/infocollectors", newInfoCollector, Void.class);
-	   assertThat(createResponse.getStatusCode()).isEqualTo(HttpStatus.CREATED);
+		ResponseEntity<Void> createResponse = restTemplate.postForEntity("/infocollectors", newInfoCollector, Void.class);
+		assertThat(createResponse.getStatusCode()).isEqualTo(HttpStatus.CREATED);
 
-	   URI locationOfNewInfoCollector = createResponse.getHeaders().getLocation();
-	   ResponseEntity<String> getResponse = restTemplate.getForEntity(locationOfNewInfoCollector, String.class);
-	   assertThat(getResponse.getStatusCode()).isEqualTo(HttpStatus.OK);
-	   
-	   DocumentContext documentContext = JsonPath.parse(getResponse.getBody());
+		URI locationOfNewInfoCollector = createResponse.getHeaders().getLocation();
+		ResponseEntity<String> getResponse = restTemplate.getForEntity(locationOfNewInfoCollector, String.class);
+		assertThat(getResponse.getStatusCode()).isEqualTo(HttpStatus.OK);
+
+		DocumentContext documentContext = JsonPath.parse(getResponse.getBody());
 		Number id = documentContext.read("$.id");
 		assertThat(id).isEqualTo(99);
 
