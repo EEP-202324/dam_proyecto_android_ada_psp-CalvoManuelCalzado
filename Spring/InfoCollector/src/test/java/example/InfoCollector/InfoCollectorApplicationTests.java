@@ -1,20 +1,25 @@
 package example.InfoCollector;
 
+import static org.assertj.core.api.Assertions.assertThat;
+
+import java.net.URI;
+
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.web.client.TestRestTemplate;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.test.annotation.DirtiesContext;
+import org.springframework.test.annotation.DirtiesContext.ClassMode;
 
 import com.jayway.jsonpath.DocumentContext;
 import com.jayway.jsonpath.JsonPath;
 
-import static org.assertj.core.api.Assertions.assertThat;
-
-import java.net.URI;
+import net.minidev.json.JSONArray;
 
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
+@DirtiesContext(classMode = ClassMode.AFTER_EACH_TEST_METHOD)
 class InfoCollectorApplicationTests {
 	@Autowired
 	TestRestTemplate restTemplate;
@@ -44,6 +49,16 @@ class InfoCollectorApplicationTests {
 		String country = documentContext.read("$.country");
 		assertThat(country).isEqualTo("España");
 	}
+	
+	@Test
+	void shouldReturnAPageOfInfoCollector() {
+	    ResponseEntity<String> response = restTemplate.getForEntity("/infocollectors?page=0&size=1", String.class);
+	    assertThat(response.getStatusCode()).isEqualTo(HttpStatus.OK);
+
+	    DocumentContext documentContext = JsonPath.parse(response.getBody());
+	    JSONArray page = documentContext.read("$[*]");
+	    assertThat(page.size()).isEqualTo(1);
+	}
 
 	@Test
 	void shouldNotReturnAInfoCollectorWithAnUnknownId() {
@@ -51,10 +66,72 @@ class InfoCollectorApplicationTests {
 
 		assertThat(response.getStatusCode()).isEqualTo(HttpStatus.NOT_FOUND);
 		assertThat(response.getBody()).isBlank();
-
+		
 	}
+		 
+	 @Test
+	 void shouldReturnASortedPageOfInfoCollector() {
+		 ResponseEntity<String> response = restTemplate.getForEntity("/infocollectors?page=0&size=1&sort=name,desc", String.class);
+
+	     DocumentContext documentContext = JsonPath.parse(response.getBody());
+	     JSONArray read = documentContext.read("$[*]");
+	     assertThat(read.size()).isEqualTo(1);
+
+	     String name = documentContext.read("$[0].name");
+	     assertThat(name).isEqualTo("Pedro");
+	     
+	 }
+	 
+	 @Test
+	 void shouldReturnASortedPageOfInfoCollectorWithNoParametersAndUseDefaultValues() {
+	     ResponseEntity<String> response = restTemplate.getForEntity("/infocollectors", String.class);
+	     assertThat(response.getStatusCode()).isEqualTo(HttpStatus.OK);
+
+	     DocumentContext documentContext = JsonPath.parse(response.getBody());
+	     JSONArray page = documentContext.read("$[*]");
+	     assertThat(page.size()).isEqualTo(3);
+
+	     JSONArray name = documentContext.read("$..name");
+	     assertThat(name).containsExactlyInAnyOrder("Jose", "Pedro", "Alex");
+	   
+	 }
+	 
+	 @Test
+	 void shouldReturnAllInfoCollectorWhenListIsRequested() {
+	     ResponseEntity<String> response = restTemplate.getForEntity("/infocollectors", String.class);
+	     assertThat(response.getStatusCode()).isEqualTo(HttpStatus.OK);
+	 }
+	 
+	 @Test
+	 void shouldReturnAllCashCardsWhenListIsRequested() {
+	     ResponseEntity<String> response = restTemplate.getForEntity("/infocollectors", String.class);
+	     assertThat(response.getStatusCode()).isEqualTo(HttpStatus.OK);
+
+	     DocumentContext documentContext = JsonPath.parse(response.getBody());
+	     int cashCardCount = documentContext.read("$.length()");
+	     assertThat(cashCardCount).isEqualTo(3);
+
+	     JSONArray ids = documentContext.read("$..id");
+	     assertThat(ids).containsExactlyInAnyOrder(99, 100, 101);
+
+	     JSONArray name = documentContext.read("$..name");
+	     assertThat(name).containsExactlyInAnyOrder("Jose", "Pedro", "Alex");
+	     
+	     JSONArray surname = documentContext.read("$..surname");
+	     assertThat(surname).containsExactlyInAnyOrder("Garcia", "Lopez", "Simarro");
+	     
+	     JSONArray email = documentContext.read("$..email");
+	     assertThat(email).containsExactlyInAnyOrder("josegarcia@gmail.com", "pedrolopez@gmail.com", "alexsimarro@gmail.com");
+	
+	     JSONArray number = documentContext.read("$..number");
+	     assertThat(number).containsExactlyInAnyOrder(640882919, 647532696, 640500399);
+	 
+	     JSONArray country = documentContext.read("$..country");
+	     assertThat(country).containsExactlyInAnyOrder("España", "Portugal", "Macedonia");
+	 }
 
 	@Test
+	@DirtiesContext
 	void shouldCreateANewInfoCollector() {
 		InfoCollector newInfoCollector = new InfoCollector(99L, "Jose", "Garcia", "josegarcia@gmail.com", 640882919, "España");
 		ResponseEntity<Void> createResponse = restTemplate.postForEntity("/infocollectors", newInfoCollector, Void.class);
