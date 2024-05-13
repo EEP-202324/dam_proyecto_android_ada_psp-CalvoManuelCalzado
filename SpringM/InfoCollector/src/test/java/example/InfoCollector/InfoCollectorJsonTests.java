@@ -27,16 +27,16 @@ class InfoCollectorJsonTests {
 	@BeforeEach
 	void setUp() {
 		infoCollectors = Arrays.array(
-				new InfoCollector(99L, "Jose", "Garcia", "josegarcia@gmail.com", 640882919, "España"),
-				new InfoCollector(100L, "Pedro", "Lopez", "pedrolopez@gmail.com", 647532696, "Portugal"),
-				new InfoCollector(101L, "Alex", "Simarro", "alexsimarro@gmail.com", 640500399, "Macedonia"));
+				new InfoCollector(99L, "sarah1", "Jose", "Garcia", "josegarcia@gmail.com", 640882919, "España"),
+				new InfoCollector(100L, "sarah2", "Pedro", "Lopez", "pedrolopez@gmail.com", 647532696, "Portugal"),
+				new InfoCollector(101L, "sarah3", "Alex", "Simarro", "alexsimarro@gmail.com", 640500399, "Macedonia"));
 	}
 
 	@Test
 	void infoCollectorSerializationTest() throws IOException {
 
-		InfoCollector infoCollector = new InfoCollector(99L, "Jose", "Garcia", "josegarcia@gmail.com", 640882919,
-				"España");
+		InfoCollector infoCollector = new InfoCollector(99L, "sarah1", "Jose", "Garcia", "josegarcia@gmail.com",
+				640882919, "España");
 		assertThat(json.write(infoCollector)).isStrictlyEqualToJson("expected.json");
 		assertThat(json.write(infoCollector)).hasJsonPathNumberValue("@.id");
 		assertThat(json.write(infoCollector)).extractingJsonPathNumberValue("@.id").isEqualTo(99);
@@ -57,29 +57,30 @@ class InfoCollectorJsonTests {
 	@Test
 	void infoCollectorListDeserializationTest() throws IOException {
 		String expected = """
-				   	[
-				   	  {"id": 99, "name": "Jose", "surname": "Garcia","email": "josegarcia@gmail.com", "number": 640882919, "country": "España" },
-				   	  {"id": 100, "name": "Pedro", "surname": "Lopez","email": "pedrolopez@gmail.com","number": 647532696, "country": "Portugal" },
-				   	  {"id": 101, "name": "Alex", "surname": "Simarro","email": "alexsimarro@gmail.com","number": 640500399, "country": "Macedonia" }
-				   	]
-				""";
+				  	[
+				  {"id": 99, "owner": "sarah1", "name": "Jose", "surname": "Garcia","email": "josegarcia@gmail.com", "number": 640882919, "country": "España" },
+				  {"id": 100, "owner": "sarah2", "name": "Pedro", "surname": "Lopez","email": "pedrolopez@gmail.com","number": 647532696, "country": "Portugal" },
+				  {"id": 101, "owner": "sarah3", "name": "Alex", "surname": "Simarro","email": "alexsimarro@gmail.com","number": 640500399, "country": "Macedonia" }
+				]
+						  """;
 		assertThat(jsonList.parse(expected)).isEqualTo(infoCollectors);
 	}
 
 	@Test
 	void infoCollectorDeserializationTest() throws IOException {
 		String expected = """
-				    {
-				    "id":99,
-				    "name": "Jose",
-				    "surname": "Garcia",
-				    "email": "josegarcia@gmail.com",
-				    "number": 640882919,
-				    "country": "España"
+			    {
+				  "id": 99,
+				  "owner": "sarah1",
+				  "name": "Jose",
+				  "surname": "Garcia",
+				  "email": "josegarcia@gmail.com",
+				  "number": 640882919,
+				  "country": "España"
 				}
-				""";
+								""";
 		assertThat(json.parse(expected))
-				.isEqualTo(new InfoCollector(99L, "Jose", "Garcia", "josegarcia@gmail.com", 640882919, "España"));
+				.isEqualTo(new InfoCollector(99L, "sarah1", "Jose", "Garcia", "josegarcia@gmail.com", 640882919, "España"));
 		assertThat(json.parseObject(expected).id()).isEqualTo(99);
 		assertThat(json.parseObject(expected).name()).isEqualTo("Jose");
 		assertThat(json.parseObject(expected).surname()).isEqualTo("Garcia");

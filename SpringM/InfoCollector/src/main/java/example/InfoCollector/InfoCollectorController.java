@@ -1,6 +1,7 @@
 package example.InfoCollector;
 
 import java.net.URI;
+import java.security.Principal;
 import java.util.List;
 import java.util.Optional;
 
@@ -26,27 +27,32 @@ public class InfoCollectorController {
     public InfoCollectorController(InfoCollectorRepository infoCollectorRepository) {
         this.infoCollectorRepository = infoCollectorRepository;
     }
-
-    @GetMapping("/{requestedId}")
-    public ResponseEntity<InfoCollector> findById(@PathVariable Long requestedId) {
-        Optional<InfoCollector> infoCollectorOptional = infoCollectorRepository.findById(requestedId);
-        return infoCollectorOptional.map(ResponseEntity::ok).orElseGet(() -> ResponseEntity.notFound().build());
-    }
     
+    @GetMapping("/{requestedId}")
+    private ResponseEntity<InfoCollector> findById(@PathVariable Long requestedId, Principal principal) {
+        Optional<InfoCollector> infoCollectorOptional = Optional.ofNullable(infoCollectorRepository.findByIdAndOwner(requestedId, principal.getName()));
+        if (infoCollectorOptional.isPresent()) {
+            return ResponseEntity.ok(infoCollectorOptional.get());
+        } else {
+            return ResponseEntity.notFound().build();
+        }
+    }
+        
     @GetMapping
-    private ResponseEntity<List<InfoCollector>> findAll(Pageable pageable) {
-        Page<InfoCollector> page = infoCollectorRepository.findAll(
-        		PageRequest.of(
-        		        pageable.getPageNumber(),
-        		        pageable.getPageSize(),
-        		        pageable.getSortOr(Sort.by(Sort.Direction.ASC, "name"))
-        		));
+    private ResponseEntity<List<InfoCollector>> findAll(Pageable pageable, Principal principal) {
+        Page<InfoCollector> page = infoCollectorRepository.findByOwner(principal.getName(),
+                PageRequest.of(
+                    pageable.getPageNumber(),
+                    pageable.getPageSize(),
+                    pageable.getSortOr(Sort.by(Sort.Direction.ASC, "name"))
+            ));
         return ResponseEntity.ok(page.getContent());
     }
+
     
     @PostMapping
 	private ResponseEntity<Void> createInfoCollector(@RequestBody InfoCollector newInfoCollectorRequest, UriComponentsBuilder ucb) {
-		InfoCollector savedInfoCollector = infoCollectorRepository.save(newInfoCollectorRequest);
+    	InfoCollector savedInfoCollector = infoCollectorRepository.save(newInfoCollectorRequest);
 	   URI locationOfNewInfoCollector = ucb
 	            .path("infocollectors/{id}")
 	            .buildAndExpand(savedInfoCollector.id())
