@@ -3,18 +3,18 @@
        "id": 1,
        "name":"Juan",
        "apellido":"Perez",
-       "AE":"Boeing 747"
+       "ae":"Boeing 747"
     },
     {
        "id": 2,
        "name":"Pablo",
        "apellido":"Posada",
-       "AE":"Airbus A380"
+       "ae":"Airbus A380"
     },
     {
        "id": 3,
        "name":"Roberto",
        "apellido":"Lopez",
-       "AE":"B-52"
+       "ae":"B-52"
     }
  ]
