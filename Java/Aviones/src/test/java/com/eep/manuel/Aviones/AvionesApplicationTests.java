@@ -43,7 +43,7 @@ class AvionesdApplicationTests {
         String apellido = documentContext.read("$.apellido");
         assertThat(apellido).isEqualTo("Perez");
         
-        String DE = documentContext.read("$.AE");
+        String DE = documentContext.read("$.ae");
         assertThat(DE).isEqualTo("Boeing 747");
         
     }
@@ -76,7 +76,7 @@ class AvionesdApplicationTests {
     String apellido = documentContext.read("$.apellido");
     assertThat(apellido).isEqualTo("Perez");
     
-    String DE = documentContext.read("$.AE");
+    String DE = documentContext.read("$.ae");
     assertThat(DE).isEqualTo("Boeing 747");
     
     }
@@ -98,7 +98,7 @@ class AvionesdApplicationTests {
         JSONArray apellido = documentContext.read("$..apellido");
         assertThat(apellido).containsExactlyInAnyOrder("Perez","Posada","Lopez");
         
-        JSONArray DE = documentContext.read("$..AE");
+        JSONArray DE = documentContext.read("$..ae");
         assertThat(DE).containsExactlyInAnyOrder("Boeing 747","Airbus A380","B-52");
     }
     @Test
@@ -140,7 +140,7 @@ class AvionesdApplicationTests {
         JSONArray apellido = documentContext.read("$..apellido");
         assertThat(apellido).containsExactlyInAnyOrder("Perez","Posada","Lopez");
         
-        JSONArray DE = documentContext.read("$..AE");
+        JSONArray DE = documentContext.read("$..ae");
         assertThat(DE).containsExactlyInAnyOrder("Boeing 747","Airbus A380","B-52");
     }
     @Test
