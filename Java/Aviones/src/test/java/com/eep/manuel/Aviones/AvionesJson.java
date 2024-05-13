@@ -59,7 +59,7 @@ class AvionesJsonTest {
     void AvionesDeserializationTest() throws IOException {
        String expected = """
                {
-                   "id":2,
+                   "id": 2,
                    "name":"Pablo",
                    "apellido":"Posada",
                    "AE":"Airbus A380"

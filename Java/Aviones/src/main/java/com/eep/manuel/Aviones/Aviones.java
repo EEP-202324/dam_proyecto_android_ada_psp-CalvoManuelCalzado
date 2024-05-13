@@ -16,43 +16,43 @@ public class Aviones {
 
     public Aviones() {
     }
-    
+        
     public Aviones(Integer id, String name, String apellido, String AE) {
         this.id = id;
         this.name = name;
         this.apellido = apellido;
         this.AE = AE;
     }
+    
+	public Integer getId() {
+		return id;
+	}
 
-    public Integer getId() {
-        return id;
-    }
+	public void setId(Integer id) {
+		this.id = id;
+	}
 
-    public void setId(Integer id) {
-        this.id = id;
-    }
+	public String getName() {
+		return name;
+	}
 
-    public String getName() {
-        return name;
-    }
+	public void setName(String name) {
+		this.name = name;
+	}
 
-    public void setName(String name) {
-        this.name = name;
-    }
+	public String getApellido() {
+		return apellido;
+	}
 
-    public String getApellido() {
-        return apellido;
-    }
+	public void setApellido(String apellido) {
+		this.apellido = apellido;
+	}
 
-    public void setApellido(String apellido) {
-        this.apellido = apellido;
-    }
+	public String getAE() {
+		return AE;
+	}
 
-    public String getAE() {
-        return AE;
-    }
-
-    public void setAE(String AE) {
-        this.AE = AE;
-    }
+	public void setAE(String aE) {
+		AE = aE;
+	}
 }
