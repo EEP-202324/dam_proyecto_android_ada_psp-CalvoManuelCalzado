@@ -1,4 +1,4 @@
-package com.example.pakamaka
+package com.eep.aviones
 
 import org.junit.Test
 
