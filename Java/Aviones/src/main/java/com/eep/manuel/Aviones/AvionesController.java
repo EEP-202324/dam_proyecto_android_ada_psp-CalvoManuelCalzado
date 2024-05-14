@@ -76,7 +76,7 @@ class AvionesController {
 	}
 	
 	@PutMapping("/{requestedId}")
-	private ResponseEntity<Void> putAviones(@PathVariable Integer requestedId, @RequestBody Aviones avionesUpdate, Principal principal) {
+	public ResponseEntity<Void> putAviones(@PathVariable Integer requestedId, @RequestBody Aviones avionesUpdate, Principal principal) {
 	    Optional<Aviones> avionesOptional = AvionesRepository.findById(requestedId);
 	    if (avionesOptional.isPresent()) {
 	        Aviones existingAviones = avionesOptional.get();
