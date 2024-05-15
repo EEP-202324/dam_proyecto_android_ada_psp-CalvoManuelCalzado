@@ -8,4 +8,6 @@
     <string name="a_adir_nombre">Añadir Nombre</string>
     <string name="a_adir_apellido">Añadir Apellido</string>
     <string name="a_adir_enviar">Añadir Enviar</string>
+    <string name="delete_button_description">Eliminar este avión</string>
+
 </resources>

@@ -32,7 +32,7 @@ class MainActivity : AppCompatActivity() {
                     val data = response.body()
                     Log.e("MainActivity", "onResponse: ${data.toString()}")
                     if (data != null) {
-                        val adapter = AvionesAdapter(data)
+                        val adapter = AvionesAdapter(data as MutableList<Aviones>)
                         binding.recyclerView.adapter = adapter
                     }
                 } else {
