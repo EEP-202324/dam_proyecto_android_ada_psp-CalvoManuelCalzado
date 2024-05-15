@@ -17,7 +17,6 @@ class AvionesAdapter(private val avionesList: MutableList<Aviones>) : RecyclerVi
     class AvionesViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         val nameTextView: TextView = itemView.findViewById(R.id.nameTextView)
         val apellidoTextView: TextView = itemView.findViewById(R.id.apellidoTextView)
-        val idTextView: TextView = itemView.findViewById(R.id.idTextView)
         val aeTextView: TextView = itemView.findViewById(R.id.aeTextView)
         val deleteButton: ImageButton = itemView.findViewById(R.id.deleteButton)
 
@@ -32,7 +31,7 @@ class AvionesAdapter(private val avionesList: MutableList<Aviones>) : RecyclerVi
         val avion = avionesList[position]
         holder.nameTextView.text = avion.name
         holder.apellidoTextView.text = avion.apellido
-        holder.idTextView.text = avion.id.toString()
+        // No se asigna ningún valor a idTextView
         holder.aeTextView.text = avion.ae
         holder.deleteButton.setOnClickListener {
             // Lógica para manejar el clic en el botón de papelera

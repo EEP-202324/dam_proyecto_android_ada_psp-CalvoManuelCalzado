@@ -10,5 +10,6 @@
     <string name="a_adir_enviar">Añadir Enviar</string>
     <string name="delete_button_description">Eliminar este avión</string>
     <string name="actualizar_aviones">Actualizar Aviones</string>
+    <string name="descripci_n_de_la_imagen">Descripción de la imagen</string>
 
 </resources>
