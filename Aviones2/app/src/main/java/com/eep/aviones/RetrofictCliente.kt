@@ -7,6 +7,7 @@ import retrofit2.http.Body
 import retrofit2.http.DELETE
 import retrofit2.http.GET
 import retrofit2.http.POST
+import retrofit2.http.PUT
 import retrofit2.http.Path
 
 const val URL = "http://10.0.2.2:8080/"
@@ -20,6 +21,10 @@ interface ConsumirApi {
 
     @DELETE("Aviones/{id}")
     fun eliminarAvion(@Path("id") avionId: Int): Call<Void>
+
+    @PUT("Aviones/{id}")
+    fun actualizarAviones(@Path("id") id: Int, @Body avion: Aviones): Call<Void>
+
 }
 
 object Servicio {

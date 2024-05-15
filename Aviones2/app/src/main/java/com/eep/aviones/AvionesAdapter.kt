@@ -20,6 +20,7 @@ class AvionesAdapter(private val avionesList: MutableList<Aviones>) : RecyclerVi
         val idTextView: TextView = itemView.findViewById(R.id.idTextView)
         val aeTextView: TextView = itemView.findViewById(R.id.aeTextView)
         val deleteButton: ImageButton = itemView.findViewById(R.id.deleteButton)
+
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): AvionesViewHolder {
@@ -33,7 +34,6 @@ class AvionesAdapter(private val avionesList: MutableList<Aviones>) : RecyclerVi
         holder.apellidoTextView.text = avion.apellido
         holder.idTextView.text = avion.id.toString()
         holder.aeTextView.text = avion.ae
-
         holder.deleteButton.setOnClickListener {
             // Lógica para manejar el clic en el botón de papelera
             val retrofitEliminar = Servicio.instancia.eliminarAvion(avion.id)
