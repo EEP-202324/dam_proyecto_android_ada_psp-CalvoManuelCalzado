@@ -1,5 +1,4 @@
-package com.eep.aviones100
-
+import com.eep.aviones100.Aviones
 import retrofit2.Response
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
@@ -20,7 +19,7 @@ interface AvionesApiService {
     suspend fun updateAviones(@Path("id") id: Long, @Body aviones: Aviones): Aviones
 
     @DELETE("Aviones/{id}")
-    suspend fun deleteAviones(@Path("id") id: Long): Unit
+    suspend fun deleteAvion(@Path("id") id: Int): Response<Unit>
 
     @POST("Aviones")
     suspend fun addAviones(@Body aviones: Aviones): Response<Void>

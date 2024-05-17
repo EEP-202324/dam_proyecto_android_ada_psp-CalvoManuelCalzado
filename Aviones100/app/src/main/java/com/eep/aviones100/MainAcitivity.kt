@@ -1,5 +1,6 @@
 package com.eep.aviones100
 
+import AvionesViewModel
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
@@ -13,16 +14,15 @@ import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.rememberCoroutineScope
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
-import com.eep.aviones100.AvionesViewModel
-import com.eep.aviones100.ui.theme.Aviones100Theme
-import com.example.myapppersonas.SecondScreen
 import kotlinx.coroutines.CoroutineScope
+
 
 class MainActivity : ComponentActivity() {
     private val viewModel: AvionesViewModel by viewModels()
@@ -30,21 +30,24 @@ class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
-            Aviones100Theme {
-                val navController = rememberNavController()
-                Surface(modifier = Modifier.fillMaxSize(), color = MaterialTheme.colorScheme.background) {
-                    NavHost(navController = navController, startDestination = "main_screen") {
-                        composable("main_screen") { AvionesListScreen(navController, viewModel) }
-                        composable("second_screen") { SecondScreen(coroutineScope = rememberCoroutineScope()) }
-                    }
-                }
+            val navController = rememberNavController()
+            val coroutineScope = rememberCoroutineScope()
+            NavHost(navController = navController, startDestination = "main_screen") {
+                composable("main_screen") { AvionesListScreen(navController, viewModel) }
+                composable("second_screen") { SecondScreen(navController = navController, coroutineScope = coroutineScope) }
             }
         }
     }
+
+
+
 }
 
 @Composable
-fun AvionesListScreen(navController: NavHostController, viewModel: AvionesViewModel) {
+fun AvionesListScreen(
+    navController: NavHostController,
+    viewModel: AvionesViewModel
+) {
     val avionesList = viewModel.avionesList
 
     Column(modifier = Modifier.padding(16.dp)) {
@@ -54,19 +57,37 @@ fun AvionesListScreen(navController: NavHostController, viewModel: AvionesViewMo
 
         LazyColumn(modifier = Modifier.padding(vertical = 8.dp)) {
             items(avionesList) { avion ->
-                AvionItem(avion)
+                AvionItem(avion = avion, onDeleteClicked = { viewModel.deleteAvion(avion) })
+                Spacer(modifier = Modifier.height(8.dp)) // Espacio adicional entre elementos
             }
         }
     }
 }
 
+
 @Composable
-fun AvionItem(avion: Aviones) {
-    Column(modifier = Modifier.padding(vertical = 8.dp)) {
-        Text(text = "ID: ${avion.id}", style = MaterialTheme.typography.bodyMedium)
-        Text(text = "AE: ${avion.ae}", style = MaterialTheme.typography.bodyMedium)
-        Text(text = "Apellido: ${avion.apellido}", style = MaterialTheme.typography.bodyMedium)
-        Text(text = "Nombre: ${avion.name}", style = MaterialTheme.typography.bodyMedium)
+fun AvionItem(avion: Aviones, onDeleteClicked: () -> Unit) {
+    Surface(
+        color = MaterialTheme.colorScheme.surface.copy(alpha = 0.1f), // Fondo distintivo
+        modifier = Modifier.fillMaxWidth().padding(vertical = 8.dp)
+    ) {
+        Row(
+            modifier = Modifier.padding(vertical = 8.dp, horizontal = 16.dp),
+            verticalAlignment = Alignment.CenterVertically
+        ) {
+            Column {
+                Text(text = "ID: ${avion.id}", style = MaterialTheme.typography.bodyMedium)
+                Text(text = "AE: ${avion.ae}", style = MaterialTheme.typography.bodyMedium)
+                Text(text = "Apellido: ${avion.apellido}", style = MaterialTheme.typography.bodyMedium)
+                Text(text = "Nombre: ${avion.name}", style = MaterialTheme.typography.bodyMedium)
+            }
+            Spacer(modifier = Modifier.weight(1f))
+            Button(
+                onClick = onDeleteClicked,
+                modifier = Modifier.padding(start = 8.dp)
+            ) {
+                Text(text = "Eliminar")
+            }
+        }
     }
 }
-

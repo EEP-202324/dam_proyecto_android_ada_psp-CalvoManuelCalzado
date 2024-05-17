@@ -1,4 +1,4 @@
-package com.example.myapppersonas
+package com.eep.aviones100
 
 import androidx.compose.foundation.layout.*
 import androidx.compose.material3.Button
@@ -12,13 +12,14 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import com.eep.aviones100.Aviones
-import com.eep.aviones100.AvionesApi
+import androidx.navigation.NavController
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
+import androidx.navigation.NavHostController
+
 
 @Composable
-fun SecondScreen(coroutineScope: CoroutineScope) {
+fun SecondScreen(navController: NavHostController, coroutineScope: CoroutineScope) {
     Surface(modifier = Modifier.fillMaxSize(), color = MaterialTheme.colorScheme.background) {
         Column(
             modifier = Modifier
@@ -69,6 +70,15 @@ fun SecondScreen(coroutineScope: CoroutineScope) {
             ) {
                 Text(text = "Enviar")
             }
+
+            Button(
+                onClick = {
+                    navController.navigateUp()
+                },
+                modifier = Modifier.padding(vertical = 16.dp)
+            ) {
+                Text(text = "Volver a la pantalla principal")
+            }
         }
     }
 }
@@ -77,13 +87,12 @@ suspend fun enviarDatos(avion: Aviones) {
     try {
         // Realiza la solicitud POST usando Retrofit
         val response = AvionesApi.retrofitService.addAviones(avion)
-        if (response.isSuccessful) {
-            // Si la solicitud es exitosa, puedes manejar la respuesta aquí
-            // Por ejemplo, mostrar un mensaje de éxito o navegar a otra pantalla
-        } else {
-            // Si la solicitud no es exitosa, puedes manejar el error aquí
-        }
+
     } catch (e: Exception) {
         // Manejo de errores
     }
 }
+@Composable
+fun SecondScreen(navController: NavController, coroutineScope: CoroutineScope) {
+}
+
