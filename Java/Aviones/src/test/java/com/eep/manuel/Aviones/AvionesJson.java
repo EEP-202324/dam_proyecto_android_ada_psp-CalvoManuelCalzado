@@ -16,21 +16,21 @@ import static org.assertj.core.api.Assertions.assertThat;
 class AvionesJsonTest {
 
 	@Autowired
-	private JacksonTester<Aviones> json;
+	private JacksonTester<Avion> json;
 	@Autowired
-	private JacksonTester<Aviones[]> jsonlist;
+	private JacksonTester<Avion[]> jsonlist;
 
-	private Aviones[] Aviones;
+	private Avion[] Aviones;
 
 	@BeforeEach
 	void setUp() {
-		Aviones = Arrays.array(new Aviones(1, "Juan", "Perez", "Boeing 747"),
-				new Aviones(2, "Pablo", "Posada", "Airbus A380"), new Aviones(3, "Roberto", "Lopez", "B-52"));
+		Aviones = Arrays.array(new Avion(1, "Juan", "Perez", "Boeing 747"),
+				new Avion(2, "Pablo", "Posada", "Airbus A380"), new Avion(3, "Roberto", "Lopez", "B-52"));
 	}
 
 	@Test
 	void AvionesSerializationTest() throws IOException {
-		Aviones Avion = new Aviones(1, "Juan", "Perez", "Boeing 747");
+		Avion Avion = new Avion(1, "Juan", "Perez", "Boeing 747");
 		assertThat(json.write(Avion)).isStrictlyEqualToJson("expected.json");
 
 		assertThat(json.write(Avion)).hasJsonPathNumberValue("@.id");
@@ -61,7 +61,7 @@ class AvionesJsonTest {
 	              "ae": "Airbus A380"
 	            }
 	             """;
-	    Aviones expectedAvion = new Aviones(1, "Pablo", "Posada", "Airbus A380");
+	    Avion expectedAvion = new Avion(1, "Pablo", "Posada", "Airbus A380");
 	    assertThat(json.parse(expected)).isEqualTo(expectedAvion);
 	    assertThat(json.parseObject(expected).getId()).isEqualTo(1);
 	    assertThat(json.parseObject(expected).getName()).isEqualTo("Pablo");

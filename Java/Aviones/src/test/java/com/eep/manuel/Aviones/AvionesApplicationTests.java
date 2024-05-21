@@ -58,7 +58,7 @@ class AvionesdApplicationTests {
     @Test
     @DirtiesContext
     void shouldCreateANewAvion() {
-    	Aviones newAviones = new Aviones(2,"Juan","Perez","Boeing 747");  
+    	Avion newAviones = new Avion(2,"Juan","Perez","Boeing 747");  
        ResponseEntity<Void> createResponse = restTemplate.postForEntity("/Aviones", newAviones, Void.class);
        assertThat(createResponse.getStatusCode()).isEqualTo(HttpStatus.CREATED);
        URI locationOfNewAviones = createResponse.getHeaders().getLocation();
@@ -147,20 +147,20 @@ class AvionesdApplicationTests {
     @DirtiesContext
     void shouldUpdateAnExistingAviones() {
         // Define los valores de ejemplo para la actualización
-    	Aviones avionesUpdate = new Aviones(1, "Juan", "Perez", "Boeing 747");
+    	Avion avionesUpdate = new Avion(1, "Juan", "Perez", "Boeing 747");
 
         // Realiza la solicitud PUT para actualizar el objeto Aviones
-        HttpEntity<Aviones> request = new HttpEntity<>(avionesUpdate);
+        HttpEntity<Avion> request = new HttpEntity<>(avionesUpdate);
         ResponseEntity<Void> response = restTemplate
                 .exchange("/Aviones/1", HttpMethod.PUT, request, Void.class);
 
         // Verifica que la actualización fue exitosa
 
         // Verifica que los campos actualizados sean los esperados
-        ResponseEntity<Aviones> getResponse = restTemplate
-                .getForEntity("/Aviones/1", Aviones.class);
+        ResponseEntity<Avion> getResponse = restTemplate
+                .getForEntity("/Aviones/1", Avion.class);
         assertThat(getResponse.getStatusCode()).isEqualTo(HttpStatus.OK);
-        Aviones updatedAviones = getResponse.getBody();
+        Avion updatedAviones = getResponse.getBody();
         assertThat(updatedAviones.getId()).isEqualTo(1);
         assertThat(updatedAviones.getName()).isEqualTo("Juan");
         assertThat(updatedAviones.getApellido()).isEqualTo("Perez");

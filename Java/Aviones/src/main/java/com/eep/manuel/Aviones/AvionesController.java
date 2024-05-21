@@ -38,9 +38,9 @@ class AvionesController {
 
     @PostConstruct
     public void init() {
-        Aviones avion1 = new Aviones(1, "Juan", "Perez", "Boeing 747");
-        Aviones avion2 = new Aviones(2, "Pablo", "Posada", "Airbus A380");
-        Aviones avion3 = new Aviones(3, "Roberto", "Lopez", "B-52");
+        Avion avion1 = new Avion(1, "Juan", "Perez", "Boeing 747");
+        Avion avion2 = new Avion(2, "Pablo", "Posada", "Airbus A380");
+        Avion avion3 = new Avion(3, "Roberto", "Lopez", "B-52");
 
         AvionesRepository.save(avion1);
         AvionesRepository.save(avion2);
@@ -48,8 +48,8 @@ class AvionesController {
     }
 
 	@GetMapping("/{requestedId}")
-	private ResponseEntity<Aviones> findById(@PathVariable Integer requestedId) {
-		Optional<Aviones> AvionesOptional = AvionesRepository.findById(requestedId);
+	private ResponseEntity<Avion> findById(@PathVariable Integer requestedId) {
+		Optional<Avion> AvionesOptional = AvionesRepository.findById(requestedId);
 		if (AvionesOptional.isPresent()) {
 			return ResponseEntity.ok(AvionesOptional.get());
 		} else {
@@ -58,9 +58,9 @@ class AvionesController {
 	}
 
 	@PostMapping
-	public ResponseEntity<Object> createAviones(@RequestBody Aviones newAvionesRequest, UriComponentsBuilder ucb) {
+	public ResponseEntity<Object> createAviones(@RequestBody Avion newAvionesRequest, UriComponentsBuilder ucb) {
 	    try {
-	        Aviones savedAviones = AvionesRepository.save(newAvionesRequest);
+	        Avion savedAviones = AvionesRepository.save(newAvionesRequest);
 	        URI locationOfNewAviones = ucb.path("/Aviones/{id}").buildAndExpand(savedAviones.getId()).toUri();
 	        return ResponseEntity.created(locationOfNewAviones).build();
 	    } catch (Exception e) {
@@ -69,17 +69,17 @@ class AvionesController {
 	}
 
 	@GetMapping
-	private ResponseEntity<List<Aviones>> findAll(Pageable pageable) {
-		Page<Aviones> page = AvionesRepository.findAll(PageRequest.of(pageable.getPageNumber(), pageable.getPageSize(),
+	private ResponseEntity<List<Avion>> findAll(Pageable pageable) {
+		Page<Avion> page = AvionesRepository.findAll(PageRequest.of(pageable.getPageNumber(), pageable.getPageSize(),
 				pageable.getSortOr(Sort.by(Sort.Direction.ASC, "id"))));
 		return ResponseEntity.ok(page.getContent());
 	}
 	
 	@PutMapping("/{requestedId}")
-	public ResponseEntity<Void> putAviones(@PathVariable Integer requestedId, @RequestBody Aviones avionesUpdate, Principal principal) {
-	    Optional<Aviones> avionesOptional = AvionesRepository.findById(requestedId);
+	public ResponseEntity<Void> putAviones(@PathVariable Integer requestedId, @RequestBody Avion avionesUpdate, Principal principal) {
+	    Optional<Avion> avionesOptional = AvionesRepository.findById(requestedId);
 	    if (avionesOptional.isPresent()) {
-	        Aviones existingAviones = avionesOptional.get();
+	        Avion existingAviones = avionesOptional.get();
 	        existingAviones.setName(avionesUpdate.getName());
 	        existingAviones.setApellido(avionesUpdate.getApellido());
 	        existingAviones.setAE(avionesUpdate.getAE());

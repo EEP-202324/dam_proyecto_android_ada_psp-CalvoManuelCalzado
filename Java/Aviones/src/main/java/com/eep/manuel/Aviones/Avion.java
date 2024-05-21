@@ -8,7 +8,7 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 
 @Entity
-public class Aviones {
+public class Avion {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
@@ -16,10 +16,10 @@ public class Aviones {
     private String apellido;
     private String ae;
 
-    public Aviones() {
+    public Avion() {
     }
         
-    public Aviones(Integer id, String name, String apellido, String ae) {
+    public Avion(Integer id, String name, String apellido, String ae) {
         this.id = id;
         this.name = name;
         this.apellido = apellido;
@@ -62,7 +62,7 @@ public class Aviones {
 	public boolean equals(Object obj) {
 	    if (this == obj) return true;
 	    if (obj == null || getClass() != obj.getClass()) return false;
-	    Aviones other = (Aviones) obj;
+	    Avion other = (Avion) obj;
 	    return Objects.equals(id, other.id) &&
 	           Objects.equals(name, other.name) &&
 	           Objects.equals(apellido, other.apellido) &&
