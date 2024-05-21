@@ -56,6 +56,16 @@ class AvionesController {
 			return ResponseEntity.notFound().build();
 		}
 	}
+	
+    @GetMapping("/tipo/{ae}")
+    public ResponseEntity<List<Avion>> findByAe(@PathVariable String ae) {
+        List<Avion> aviones = AvionesRepository.findByAe(ae);
+        if (aviones.isEmpty()) {
+            return ResponseEntity.notFound().build();
+        } else {
+            return ResponseEntity.ok(aviones);
+        }
+    }
 
 	@PostMapping
 	public ResponseEntity<Object> createAviones(@RequestBody Avion newAvionesRequest, UriComponentsBuilder ucb) {

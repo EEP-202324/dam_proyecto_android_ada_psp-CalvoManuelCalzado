@@ -26,13 +26,13 @@ class MainActivity : AppCompatActivity() {
         val retrofitTraer = Servicio.instancia.getTraer()
         Log.e("MainActivity", "onCreate: Retrofit call created")
 
-        retrofitTraer.enqueue(object : Callback<List<Aviones>> {
-            override fun onResponse(call: Call<List<Aviones>>, response: Response<List<Aviones>>) {
+        retrofitTraer.enqueue(object : Callback<List<Avion>> {
+            override fun onResponse(call: Call<List<Avion>>, response: Response<List<Avion>>) {
                 if (response.isSuccessful) {
                     val data = response.body()
                     Log.e("MainActivity", "onResponse: ${data.toString()}")
                     if (data != null) {
-                        val adapter = AvionesAdapter(data as MutableList<Aviones>)
+                        val adapter = AvionesAdapter(data as MutableList<Avion>)
                         binding.recyclerView.adapter = adapter
                     }
                 } else {
@@ -40,7 +40,7 @@ class MainActivity : AppCompatActivity() {
                 }
             }
 
-            override fun onFailure(call: Call<List<Aviones>>, t: Throwable) {
+            override fun onFailure(call: Call<List<Avion>>, t: Throwable) {
                 Log.e("MainActivity", "onFailure: API call failed", t)
                 Toast.makeText(this@MainActivity, "Error al consultar Api Rest", Toast.LENGTH_SHORT).show()
             }

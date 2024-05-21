@@ -1,6 +1,6 @@
 package com.eep.aviones
 
-data class Aviones(
+data class Avion(
     val ae: String,
     val apellido: String,
     val id: Int,

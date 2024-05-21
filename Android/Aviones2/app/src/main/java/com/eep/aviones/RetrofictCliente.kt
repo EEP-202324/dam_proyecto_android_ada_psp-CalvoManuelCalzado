@@ -14,16 +14,16 @@ const val URL = "http://10.0.2.2:8080/"
 
 interface ConsumirApi {
     @GET("Aviones")
-    fun getTraer(): Call<List<Aviones>>
+    fun getTraer(): Call<List<Avion>>
 
     @POST("Aviones")
-    fun crearAvion(@Body avion: Aviones): Call<Void>
+    fun crearAvion(@Body avion: Avion): Call<Void>
 
     @DELETE("Aviones/{id}")
     fun eliminarAvion(@Path("id") avionId: Int): Call<Void>
 
     @PUT("Aviones/{id}")
-    fun actualizarAviones(@Path("id") id: Int, @Body avion: Aviones): Call<Void>
+    fun actualizarAviones(@Path("id") id: Int, @Body avion: Avion): Call<Void>
 
 }
 

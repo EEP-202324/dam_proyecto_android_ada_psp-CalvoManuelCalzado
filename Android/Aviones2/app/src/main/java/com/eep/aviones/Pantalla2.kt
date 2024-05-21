@@ -46,7 +46,7 @@ class Pantalla2 : AppCompatActivity() {
             val ae = aeEditText.text.toString()
 
             // Crear un nuevo objeto Aviones
-            val nuevoAvion = Aviones(nombre, apellido, 0, ae)
+            val nuevoAvion = Avion(nombre, apellido, 0, ae)
 
             // Llamar a la función para crear un nuevo avión en la API
             Servicio.instancia.crearAvion(nuevoAvion).enqueue(object : Callback<Void> {

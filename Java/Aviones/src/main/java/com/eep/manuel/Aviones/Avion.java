@@ -2,6 +2,7 @@ package com.eep.manuel.Aviones;
 
 import java.util.Objects;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -12,8 +13,14 @@ public class Avion {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
+    
+    @Column(name = "name")
     private String name;
+    
+    @Column(name = "surname")
     private String apellido;
+    
+    @Column(name = "ae")
     private String ae;
 
     public Avion() {
@@ -55,7 +62,7 @@ public class Avion {
 	}
 
 	public void setAE(String aE) {
-		ae = aE;
+		this.ae = aE;
 	}
 	
 	@Override
@@ -68,6 +75,4 @@ public class Avion {
 	           Objects.equals(apellido, other.apellido) &&
 	           Objects.equals(ae, other.ae);
 	}
-
-	
 }

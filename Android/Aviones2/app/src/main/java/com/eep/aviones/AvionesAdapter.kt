@@ -12,11 +12,11 @@ import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 
-class AvionesAdapter(private val avionesList: MutableList<Aviones>) : RecyclerView.Adapter<AvionesAdapter.AvionesViewHolder>() {
+class AvionesAdapter(private val avionesList: MutableList<Avion>) : RecyclerView.Adapter<AvionesAdapter.AvionesViewHolder>() {
 
     class AvionesViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-        val nameTextView: TextView = itemView.findViewById(R.id.nameTextView)
-        val apellidoTextView: TextView = itemView.findViewById(R.id.apellidoTextView)
+        val nameTextView: TextView = itemView.findViewById(R.id.apellidoTextView)
+        val apellidoTextView: TextView = itemView.findViewById(R.id.nameTextView)
         val aeTextView: TextView = itemView.findViewById(R.id.aeTextView)
         val deleteButton: ImageButton = itemView.findViewById(R.id.deleteButton)
 

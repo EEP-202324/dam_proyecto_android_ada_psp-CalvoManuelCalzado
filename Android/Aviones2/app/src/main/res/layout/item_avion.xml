@@ -35,13 +35,6 @@
             android:textSize="18sp" />
 
         <!-- Nombre -->
-        <TextView
-            android:id="@+id/apellidoTextView"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="8dp"
-            android:padding="8dp"
-            android:textSize="18sp" />
 
         <TextView
             android:id="@+id/nameTextView"
@@ -50,6 +43,14 @@
             android:padding="8dp"
             android:textSize="18sp"
             android:layout_marginBottom="8dp" />
+
+        <TextView
+            android:id="@+id/apellidoTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="8dp"
+            android:padding="8dp"
+            android:textSize="18sp" />
 
         <!-- AE -->
 
